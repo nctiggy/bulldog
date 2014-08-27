@@ -62,14 +62,14 @@ class Bulldog
   def create_snapshot(new_vol,anc_vol)
     
     payload = {
-      :'ancestor-vol-id' => new_vol,
-      :'snap-vol-name' => anc_vol
+      :'ancestor-vol-id' => anc_vol,
+      :'snap-vol-name' => new_vol
     }
     
      JSON.parse(RestClient::Request.execute(method: :post,
        url: "#{@base_url}/api/json/types/snapshots",
        verify_ssl: @verify_cert,
-       payload: payload,
+       payload: payload.to_json,
        user: @user_name,
        password: @password,
        headers: {
