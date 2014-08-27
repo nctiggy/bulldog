@@ -9,4 +9,6 @@ vol_name = bulldog.get_volumes['volumes'][0]['name']
 
 snap_href = bulldog.create_snapshot("snap_#{vol_name}",vol_name)['links'][0]['href']
 
-pp bulldog.get_snapshot(snap_href)
+bulldog.get_snapshot(snap_href)
+
+bulldog.delete_snapshot(snap_href)

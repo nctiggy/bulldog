@@ -78,6 +78,15 @@ class Bulldog
        }))
   end
   
+  def delete_snapshot(snap_href)
+    RestClient::Request.execute(method: :delete,
+      url: snap_href,
+      verify_ssl: @verify_cert,
+      user: @user_name,
+      password: @password
+      )
+  end
+  
   def get_initiator_groups
     JSON.parse(RestClient::Request.execute(method: :get,
       url: "#{@base_url}/api/json/types/initiator-groups",
