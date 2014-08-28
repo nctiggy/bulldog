@@ -35,6 +35,18 @@ class Bulldog
       ))
   end
   
+  def get_volume_by_id(vol_id)
+    JSON.parse(RestClient::Request.execute(method: :get,
+      url: "#{@base_url}/api/json/types/volumes/#{vol_id}",
+      headers: {
+        accept: :json
+      },
+      verify_ssl: @verify_cert,
+      user: @user_name,
+      password: @password
+      ))
+  end
+  
   def get_snapshot(snap_href)
     JSON.parse(RestClient::Request.execute(method: :get,
       url: snap_href,
@@ -97,6 +109,24 @@ class Bulldog
       user: @user_name,
       password: @password
       ))
+  end
+  
+  def map_lun(vol_name,init_grp_name)
+    payload = {
+      :'vol-id' => vol_name,
+      :'ig-id' => init_grp_name
+    }
+    
+     JSON.parse(RestClient::Request.execute(method: :post,
+       url: "#{@base_url}/api/json/types/lun-maps",
+       verify_ssl: @verify_cert,
+       payload: payload.to_json,
+       user: @user_name,
+       password: @password,
+       headers: {
+         content_type: 'application/json',
+         accept: :json
+       }))
   end
   
   def get_target_groups
