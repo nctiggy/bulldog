@@ -8,9 +8,9 @@ require_relative 'bulldog.rb'
 -example.rb  
 
 ####Create a XtremIO Object
-''' ruby
+``` ruby
 bulldog = Bulldog.new([base_url],[user_name],[password],FALSE)
-'''
+```
 
 ####Get all Volumes
     bulldog.get_volumes
