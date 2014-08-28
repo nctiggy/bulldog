@@ -13,4 +13,6 @@ bulldog = Bulldog.new([base_url],[user_name],[password],FALSE)
 ```
 
 ####Get all Volumes
-    bulldog.get_volumes
+``` ruby
+bulldog.get_volumes
+```
