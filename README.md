@@ -2,7 +2,8 @@
 Ruby Library for XtremIO  
 
 ####Install and usage:
-require_relative 'bulldog.rb'  
+gem install heybulldog  
+require 'heybulldog'  
 
 ####Example usage files:
 -example.rb  
