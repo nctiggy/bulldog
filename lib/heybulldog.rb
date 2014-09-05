@@ -11,6 +11,10 @@ class Bulldog
     @base_url = base_url
   end
   
+  # Get all Volumes and Snapshots
+  #
+  # @return [JSON] returns a JSON collection of all Volume HREF and Name information
+  # @author Craig J Smith
   def get_volumes
     JSON.parse(RestClient::Request.execute(method: :get,
       url: "#{@base_url}/api/json/types/volumes",
@@ -23,6 +27,11 @@ class Bulldog
       ))
   end
   
+  # Get an individual volumes's details
+  #
+  # @param vol_href [STRING] HREF value of a volume
+  # @return [JSON] returns detailed volume information
+  # @author Craig J Smith
   def get_volume(vol_href)
     JSON.parse(RestClient::Request.execute(method: :get,
       url: vol_href,

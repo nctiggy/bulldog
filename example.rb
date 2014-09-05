@@ -1,4 +1,4 @@
-require_relative 'bulldog.rb'
+require_relative 'lib/heybulldog.rb'
 require 'pp'
 
 #Create new object
