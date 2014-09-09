@@ -11,6 +11,70 @@ class Bulldog
     @base_url = base_url
   end
   
+  # Get all Clusters
+  #
+  # @return [JSON] returns a JSON collection of all Clusters HREF and Name information
+  # @author Craig J Smith
+  def get_clusters
+    JSON.parse(RestClient::Request.execute(method: :get,
+      url: "#{@base_url}/api/json/types/clusters",
+      headers: {
+        accept: :json
+      },
+      verify_ssl: @verify_cert,
+      user: @user_name,
+      password: @password
+      ))
+  end
+  
+  # Get cluster deatils
+  #
+  # @return [JSON] returns a JSON collection of cluster details
+  # @author Craig J Smith
+  def get_cluster(cluster_href)
+    JSON.parse(RestClient::Request.execute(method: :get,
+      url: cluster_href,
+      headers: {
+        accept: :json
+      },
+      verify_ssl: @verify_cert,
+      user: @user_name,
+      password: @password
+      ))
+  end
+  
+  # Get all X-Bricks
+  #
+  # @return [JSON] returns a JSON collection of all X-Bricks HREF and Name information
+  # @author Craig J Smith
+  def get_xbricks
+    JSON.parse(RestClient::Request.execute(method: :get,
+      url: "#{@base_url}/api/json/types/bricks",
+      headers: {
+        accept: :json
+      },
+      verify_ssl: @verify_cert,
+      user: @user_name,
+      password: @password
+      ))
+  end
+  
+  # Get X-Brick deatils
+  #
+  # @return [JSON] returns a JSON collection of X-Brick details
+  # @author Craig J Smith
+  def get_xbrick(xbrick_href)
+    JSON.parse(RestClient::Request.execute(method: :get,
+      url: xbrick_href,
+      headers: {
+        accept: :json
+      },
+      verify_ssl: @verify_cert,
+      user: @user_name,
+      password: @password
+      ))
+  end
+  
   # Get all Volumes and Snapshots
   #
   # @return [JSON] returns a JSON collection of all Volume HREF and Name information
@@ -80,12 +144,33 @@ class Bulldog
       ))
   end
   
-  def create_snapshot(new_vol,anc_vol)
+  def create_snapshot(ancestor_vol_id,snap_vol_name,folder_id=nil)
     
-    payload = {
-      :'ancestor-vol-id' => anc_vol,
-      :'snap-vol-name' => new_vol
-    }
+    payload = {}
+    args = method(__method__).parameters.map { |arg| arg[1] }
+    args.map.each do |arg| 
+      payload[arg.to_s.gsub(/_/,'-')] = eval arg.to_s unless (eval arg.to_s).nil?
+    end
+    
+     JSON.parse(RestClient::Request.execute(method: :post,
+       url: "#{@base_url}/api/json/types/snapshots",
+       verify_ssl: @verify_cert,
+       payload: payload.to_json,
+       user: @user_name,
+       password: @password,
+       headers: {
+         content_type: 'application/json',
+         accept: :json
+       }))
+  end
+  
+  def create_snapshot_from_folder(source_folder_id,suffix,folder_id=nil)
+    
+    payload = {}
+    args = method(__method__).parameters.map { |arg| arg[1] }
+    args.map.each do |arg| 
+      payload[arg.to_s.gsub(/_/,'-')] = eval arg.to_s unless (eval arg.to_s).nil?
+    end
     
      JSON.parse(RestClient::Request.execute(method: :post,
        url: "#{@base_url}/api/json/types/snapshots",
@@ -120,11 +205,13 @@ class Bulldog
       ))
   end
   
-  def map_lun(vol_name,init_grp_name)
-    payload = {
-      :'vol-id' => vol_name,
-      :'ig-id' => init_grp_name
-    }
+  def map_lun(vol_id,ig_id,lun=nil,tg_id=nil)
+
+    payload = {}
+    args = method(__method__).parameters.map { |arg| arg[1] }
+    args.map.each do |arg| 
+      payload[arg.to_s.gsub(/_/,'-')] = eval arg.to_s unless (eval arg.to_s).nil?
+    end
     
      JSON.parse(RestClient::Request.execute(method: :post,
        url: "#{@base_url}/api/json/types/lun-maps",

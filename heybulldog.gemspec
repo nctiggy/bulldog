@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'heybulldog'
-  s.version     = '0.0.1'
-  s.date        = '2014-08-27'
+  s.version     = '0.0.2'
+  s.date        = '2014-09-09'
   s.summary     = "A Ruby Library for EMC's XtremIO"
   s.description = "Abstraction of the XtremIO API"
   s.authors     = ["Craig J Smith"]
